@@ -627,6 +627,9 @@
 //@ revisions: x86_64_unknown_none
 //@ [x86_64_unknown_none] compile-flags: --target x86_64-unknown-none
 //@ [x86_64_unknown_none] needs-llvm-components: x86
+//@ revisions: x86_64_unknown_oro_elf
+//@ [x86_64_unknown_oro_elf] compile-flags: --target x86_64-unknown-oro-elf
+//@ [x86_64_unknown_oro_elf] needs-llvm-components: x86
 //@ revisions: x86_64_unknown_openbsd
 //@ [x86_64_unknown_openbsd] compile-flags: --target x86_64-unknown-openbsd
 //@ [x86_64_unknown_openbsd] needs-llvm-components: x86

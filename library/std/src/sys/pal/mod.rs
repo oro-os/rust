@@ -61,6 +61,9 @@ cfg_if::cfg_if! {
     } else if #[cfg(target_os = "zkvm")] {
         mod zkvm;
         pub use self::zkvm::*;
+    } else if #[cfg(target_os = "oro")] {
+        mod oro;
+        pub use self::oro::*;
     } else {
         mod unsupported;
         pub use self::unsupported::*;

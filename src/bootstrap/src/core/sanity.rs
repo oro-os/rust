@@ -38,6 +38,7 @@ const STAGE0_MISSING_TARGETS: &[&str] = &[
     "x86_64-pc-nto-qnx710_iosock",
     "x86_64-pc-nto-qnx800",
     "aarch64-unknown-nto-qnx800",
+    "x86_64-unknown-oro-elf",
 ];
 
 /// Minimum version threshold for libstdc++ required when using prebuilt LLVM
