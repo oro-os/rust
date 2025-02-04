@@ -15,10 +15,10 @@ pub(crate) fn target() -> Target {
         arch: "x86_64".into(),
         options: base,
         metadata: TargetMetadata {
-            description: None,
-            tier: None,
-            host_tools: None,
-            std: None,
+            description: Some("64-bit Oro (ELF Module)".into()),
+            tier: Some(3),
+            host_tools: Some(false),
+            std: Some(true),
         },
     }
 }

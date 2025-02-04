@@ -170,6 +170,13 @@ pub(crate) mod key {
             pub(crate) use xous::destroy_tls;
             pub(super) use xous::{Key, get, set};
             use xous::{create, destroy};
+        } else if #[cfg(target_os = "oro")] {
+            mod racy;
+            mod oro;
+            #[cfg(test)]
+            mod tests;
+            pub(super) use racy::LazyKey;
+            pub(super) use oro::{Key, get, set, create, destroy};
         }
     }
 }
