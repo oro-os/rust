@@ -53,3 +53,17 @@ pub extern "C" fn memcpy(dest: *mut u8, src: *const u8, n: usize) {
         }
     }
 }
+
+#[cfg(not(test))]
+#[no_mangle]
+pub extern "C" fn memset(s: *mut u8, c: i32, n: usize) {
+    // NOTE(qix-): Super naive implementation, but it should work for now.
+    // NOTE(qix-): Needed for now since libc hasn't been adapted for Oro yet.
+    unsafe {
+        let mut i = 0;
+        while i < n {
+            *s.add(i) = c as u8;
+            i += 1;
+        }
+    }
+}
