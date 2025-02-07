@@ -1,4 +1,4 @@
-use crate::spec::{Cc, LinkerFlavor, Lld, RelocModel, StackProbeType, TargetOptions, LinkSelfContainedDefault, PanicStrategy};
+use crate::spec::{Cc, LinkerFlavor, Lld, RelocModel, StackProbeType, TargetOptions, LinkSelfContainedDefault, PanicStrategy, CodeModel};
 
 pub(crate) fn opts() -> TargetOptions {
     TargetOptions {
@@ -27,6 +27,7 @@ pub(crate) fn opts() -> TargetOptions {
         requires_lto: true,
         no_builtins: false,
         supports_xray: false, // NOTE(qix-): Temporary
+        code_model: Some(CodeModel::Medium),
         ..Default::default()
     }
 }

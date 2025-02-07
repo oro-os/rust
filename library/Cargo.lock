@@ -193,6 +193,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "oro"
+version = "0.0.0"
+dependencies = [
+ "cfg-if",
+ "compiler_builtins",
+ "rustc-std-workspace-core",
+]
+
+[[package]]
 name = "panic_abort"
 version = "0.0.0"
 dependencies = [
@@ -350,6 +359,7 @@ dependencies = [
  "libc",
  "miniz_oxide",
  "object",
+ "oro",
  "panic_abort",
  "panic_unwind",
  "r-efi",

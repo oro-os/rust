@@ -7,8 +7,10 @@ extern "C" {
 
 #[no_mangle]
 #[allow(unused)]
-pub extern "C" fn _start() {
+pub extern "C" fn _start() -> ! {
+    // SAFETY: We're aware of what `terminate` does. This is safe and expected.
     unsafe {
-        main(0, ptr::null());
+        let _ = main(0, ptr::null());
+		super::terminate::terminate()
     };
 }

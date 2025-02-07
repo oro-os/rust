@@ -11,6 +11,7 @@ pub mod process;
 pub mod stdio;
 pub mod thread;
 pub mod time;
+pub mod terminate;
 
 mod common;
 pub use common::*;

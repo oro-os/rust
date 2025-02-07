@@ -25,5 +25,8 @@ pub fn decode_error_kind(_code: i32) -> crate::io::ErrorKind {
 }
 
 pub fn abort_internal() -> ! {
-    core::intrinsics::abort();
+    // SAFETY: We're aware of what `terminate` does. This is safe and expected.
+    unsafe {
+        super::terminate::terminate()
+    }
 }

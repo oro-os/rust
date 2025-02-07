@@ -6,6 +6,7 @@ pub(crate) fn target() -> Target {
     base.disable_redzone = true;
     base.panic_strategy = PanicStrategy::Abort;
     base.features = "-mmx,-sse,+soft-float".into();
+   base.link_script = Some(LINK_SCRIPT.into());
 
     Target {
         llvm_target: "x86_64-unknown-none".into(),
@@ -22,3 +23,50 @@ pub(crate) fn target() -> Target {
         },
     }
 }
+
+static LINK_SCRIPT: &str = r#"
+OUTPUT_FORMAT(elf64-x86-64)
+OUTPUT_ARCH(i386:x86-64)
+
+ENTRY(_start)
+
+PHDRS {
+	text     PT_LOAD    FLAGS((1 << 0) | (1 << 2));  /* rx */
+	rodata   PT_LOAD    FLAGS((1 << 2)           );  /* r  */
+	data     PT_LOAD    FLAGS((1 << 1) | (1 << 2));  /* rw */
+}
+
+SECTIONS {
+	. = 0x2000000;
+
+	.text : {
+		*(.text .text.*)
+	} :text
+
+	. = ALIGN(4096);
+
+	.rodata : {
+		KEEP(*(.oro .oro.*))
+		*(.rodata .rodata.*)
+		*(.got .got.*)
+	} :rodata
+
+	. = ALIGN(4096);
+
+	.data : {
+		*(.data .data.*)
+	} :data
+
+	. = ALIGN(4096);
+
+	.bss : {
+		*(COMMON)
+		*(.bss .bss.*) /* MUST be last allocated to :data */
+	} :data
+
+	/DISCARD/ : {
+		*(.eh_frame)
+		*(.note .note.*)
+	}
+}
+"#;
