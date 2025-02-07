@@ -34,6 +34,8 @@ PHDRS {
 	text     PT_LOAD    FLAGS((1 << 0) | (1 << 2));  /* rx */
 	rodata   PT_LOAD    FLAGS((1 << 2)           );  /* r  */
 	data     PT_LOAD    FLAGS((1 << 1) | (1 << 2));  /* rw */
+    lrodata  PT_LOAD    FLAGS((1 << 2)           );  /* r  */
+    ldata    PT_LOAD    FLAGS((1 << 1) | (1 << 2));  /* rw */
 }
 
 SECTIONS {
@@ -63,6 +65,26 @@ SECTIONS {
 		*(COMMON)
 		*(.bss .bss.*) /* MUST be last allocated to :data */
 	} :data
+
+    . = ALIGN(4096);
+
+    /* https://web.archive.org/web/20250207153752/https://lld.llvm.org/ELF/large_sections.html */
+
+    .lrodata : {
+        *(.lrodata .lrodata.*)
+    } :lrodata
+
+    . = ALIGN(4096);
+
+    .ldata : {
+        *(.ldata .ldata.*)
+    } :ldata
+
+    . = ALIGN(4096);
+
+    .lbss : {
+        *(.lbss .lbss.*) /* MUST be last allocated to :ldata */
+    } :ldata
 
 	/DISCARD/ : {
 		*(.eh_frame)
