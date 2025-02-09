@@ -5,6 +5,7 @@ use crate::alloc::{GlobalAlloc, Layout, System};
 unsafe impl GlobalAlloc for System {
     #[inline]
     unsafe fn alloc(&self, _layout: Layout) -> *mut u8 {
+        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::alloc()");
         todo!("std::sys::alloc::oro::System::alloc()")
         // if layout.align() <= MIN_ALIGN && layout.align() <= layout.size() {
         //     unsafe { libc::malloc(layout.size()) as *mut u8 }
@@ -15,12 +16,14 @@ unsafe impl GlobalAlloc for System {
 
     #[inline]
     unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {
+        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::dealloc()");
         todo!("std::sys::alloc::oro::System::dealloc()")
         // unsafe { libc::free(ptr as *mut libc::c_void) }
     }
 
     #[inline]
     unsafe fn realloc(&self, _ptr: *mut u8, _layout: Layout, _new_size: usize) -> *mut u8 {
+        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::realloc()");
         todo!("std::sys::alloc::oro::System::realloc()")
         // unsafe {
         //     if layout.align() <= MIN_ALIGN && layout.align() <= new_size {

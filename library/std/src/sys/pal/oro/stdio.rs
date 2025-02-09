@@ -24,6 +24,8 @@ impl Stdout {
 
 impl io::Write for Stdout {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        // TODO(qix-): Temporary.
+        ::oro::root_ring::debug_out_v0::write_bytes(buf);
         Ok(buf.len())
     }
 
@@ -40,6 +42,8 @@ impl Stderr {
 
 impl io::Write for Stderr {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        // TODO(qix-): Temporary.
+        ::oro::root_ring::debug_out_v0::write_bytes(buf);
         Ok(buf.len())
     }
 
@@ -54,6 +58,8 @@ pub fn is_ebadf(_err: &io::Error) -> bool {
     true
 }
 
-pub fn panic_output() -> Option<Vec<u8>> {
-    None
+// TODO(qix-): Temporary; need to figure out a better way of configuring
+// TODO(qix-): the panic output interface.
+pub fn panic_output() -> Option<impl io::Write> {
+    Some(Stdout)
 }

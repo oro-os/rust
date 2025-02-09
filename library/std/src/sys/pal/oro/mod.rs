@@ -67,3 +67,20 @@ pub extern "C" fn memset(s: *mut u8, c: i32, n: usize) {
         }
     }
 }
+
+#[cfg(not(test))]
+#[no_mangle]
+pub extern "C" fn memcmp(s1: *const u8, s2: *const u8, n: usize) -> i32 {
+    // NOTE(qix-): Super naive implementation, but it should work for now.
+    // NOTE(qix-): Needed for now since libc hasn't been adapted for Oro yet.
+    unsafe {
+        let mut i = 0;
+        while i < n {
+            if *s1.add(i) != *s2.add(i) {
+                return *s1.add(i) as i32 - *s2.add(i) as i32;
+            }
+            i += 1;
+        }
+    }
+    0
+}
