@@ -1,36 +1,25 @@
-//use super::{MIN_ALIGN, realloc_fallback};
+use oro::alloc::HeapAllocator;
 use crate::alloc::{GlobalAlloc, Layout, System};
+
+static ALLOCATOR: HeapAllocator = HeapAllocator::new();
 
 #[stable(feature = "alloc_system_type", since = "1.28.0")]
 unsafe impl GlobalAlloc for System {
     #[inline]
-    unsafe fn alloc(&self, _layout: Layout) -> *mut u8 {
-        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::alloc()");
-        todo!("std::sys::alloc::oro::System::alloc()")
-        // if layout.align() <= MIN_ALIGN && layout.align() <= layout.size() {
-        //     unsafe { libc::malloc(layout.size()) as *mut u8 }
-        // } else {
-        //     unsafe { libc::memalign(layout.align(), layout.size()) as *mut u8 }
-        // }
+    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+        // SAFETY: This is a forwarding call; safety must be upheld by the caller.
+        unsafe { ALLOCATOR.alloc(layout) }
     }
 
     #[inline]
-    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {
-        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::dealloc()");
-        todo!("std::sys::alloc::oro::System::dealloc()")
-        // unsafe { libc::free(ptr as *mut libc::c_void) }
+    unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
+        // SAFETY: This is a forwarding call; safety must be upheld by the caller.
+        unsafe { ALLOCATOR.dealloc(ptr, layout) }
     }
 
     #[inline]
-    unsafe fn realloc(&self, _ptr: *mut u8, _layout: Layout, _new_size: usize) -> *mut u8 {
-        ::oro::debug_out_v0_println!("std::sys::alloc::oro::System::realloc()");
-        todo!("std::sys::alloc::oro::System::realloc()")
-        // unsafe {
-        //     if layout.align() <= MIN_ALIGN && layout.align() <= new_size {
-        //         libc::realloc(ptr as *mut libc::c_void, new_size) as *mut u8
-        //     } else {
-        //         realloc_fallback(self, ptr, layout, new_size)
-        //     }
-        // }
+    unsafe fn realloc(&self, ptr: *mut u8, layout: Layout, new_size: usize) -> *mut u8 {
+        // SAFETY: This is a forwarding call; safety must be upheld by the caller.
+        unsafe { ALLOCATOR.realloc(ptr, layout, new_size) }
     }
 }
