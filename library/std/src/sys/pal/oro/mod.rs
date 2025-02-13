@@ -12,6 +12,7 @@ pub mod stdio;
 pub mod thread;
 pub mod time;
 pub mod terminate;
+pub mod spin_mutex;
 
 mod common;
 pub use common::*;
@@ -28,7 +29,7 @@ pub extern "C" fn __rust_abort() {
 
 #[cfg(not(test))]
 #[no_mangle]
-pub extern "C" fn memmove(dest: *mut u8, src: *const u8, n: usize) {
+pub extern "C" fn memmove(dest: *mut u8, src: *const u8, n: usize) -> *mut u8 {
     // NOTE(qix-): Super naive implementation, but it should work for now.
     // NOTE(qix-): Needed for now since libc hasn't been adapted for Oro yet.
     unsafe {
@@ -38,11 +39,13 @@ pub extern "C" fn memmove(dest: *mut u8, src: *const u8, n: usize) {
             i += 1;
         }
     }
+
+    dest
 }
 
 #[cfg(not(test))]
 #[no_mangle]
-pub extern "C" fn memcpy(dest: *mut u8, src: *const u8, n: usize) {
+pub extern "C" fn memcpy(dest: *mut u8, src: *const u8, n: usize) -> *mut u8 {
     // NOTE(qix-): Super naive implementation, but it should work for now.
     // NOTE(qix-): Needed for now since libc hasn't been adapted for Oro yet.
     unsafe {
@@ -52,11 +55,13 @@ pub extern "C" fn memcpy(dest: *mut u8, src: *const u8, n: usize) {
             i += 1;
         }
     }
+
+    dest
 }
 
 #[cfg(not(test))]
 #[no_mangle]
-pub extern "C" fn memset(s: *mut u8, c: i32, n: usize) {
+pub extern "C" fn memset(s: *mut u8, c: i32, n: usize) -> *mut u8 {
     // NOTE(qix-): Super naive implementation, but it should work for now.
     // NOTE(qix-): Needed for now since libc hasn't been adapted for Oro yet.
     unsafe {
@@ -66,6 +71,8 @@ pub extern "C" fn memset(s: *mut u8, c: i32, n: usize) {
             i += 1;
         }
     }
+
+    s
 }
 
 #[cfg(not(test))]

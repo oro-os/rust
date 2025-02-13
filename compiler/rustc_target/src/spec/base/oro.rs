@@ -24,7 +24,7 @@ pub(crate) fn opts() -> TargetOptions {
         crt_static_respected: false,
         stack_probes: StackProbeType::Inline,
         trap_unreachable: true,
-        requires_lto: true,
+        requires_lto: false,
         no_builtins: false,
         supports_xray: false, // NOTE(qix-): Temporary
         code_model: Some(CodeModel::Medium),

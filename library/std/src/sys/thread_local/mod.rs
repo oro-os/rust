@@ -177,6 +177,7 @@ pub(crate) mod key {
             mod tests;
             pub(super) use racy::LazyKey;
             pub(super) use oro::{Key, get, set, create, destroy};
+            pub(crate) use oro::init;
         }
     }
 }

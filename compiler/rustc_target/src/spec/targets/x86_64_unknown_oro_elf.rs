@@ -6,7 +6,7 @@ pub(crate) fn target() -> Target {
     base.disable_redzone = true;
     base.panic_strategy = PanicStrategy::Abort;
     base.features = "-mmx,-sse,+soft-float".into();
-   base.link_script = Some(LINK_SCRIPT.into());
+    base.link_script = Some(LINK_SCRIPT.into());
 
     Target {
         llvm_target: "x86_64-unknown-none".into(),
