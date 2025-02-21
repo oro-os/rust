@@ -1,15 +1,16 @@
-use crate::spec::{base, PanicStrategy, Target, TargetMetadata};
+use crate::spec::{base, PanicStrategy, Target, TargetMetadata, RustcAbi};
 
 pub(crate) fn target() -> Target {
     let mut base = base::oro::opts();
     base.cpu = "x86-64".into();
     base.disable_redzone = true;
     base.panic_strategy = PanicStrategy::Abort;
-    base.features = "-mmx,-sse,+soft-float".into();
+    base.features = "-mmx,-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2,+soft-float".into();
     base.link_script = Some(LINK_SCRIPT.into());
+    base.rustc_abi = Some(RustcAbi::X86Softfloat);
 
     Target {
-        llvm_target: "x86_64-unknown-none".into(),
+        llvm_target: "x86_64-unknown-none-elf".into(),
         pointer_width: 64,
         data_layout:
             "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128".into(),
