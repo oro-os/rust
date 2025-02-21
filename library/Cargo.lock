@@ -195,7 +195,7 @@ dependencies = [
 [[package]]
 name = "oro"
 version = "0.0.0"
-source = "git+https://github.com/oro-os/kernel.git#94e360d8a043f6c501d0007a416c266eecbf4e70"
+source = "git+https://github.com/oro-os/kernel.git#af41f3158218212c3602d8b48b8c38b2bfff70b1"
 dependencies = [
  "cfg-if",
  "compiler_builtins",
